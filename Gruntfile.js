@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     concat: {
     },
 
@@ -18,6 +19,16 @@ module.exports = function(grunt) {
       dev: {
         script: 'server.js'
       }
+    },
+
+    gitpush: {
+      task: {
+         options: {
+           remote: 'live',
+           branch: 'master',
+           cwd: './'
+         }
+       }
     },
 
     uglify: {
@@ -68,6 +79,10 @@ module.exports = function(grunt) {
     grunt.task.run([ 'nodemon', 'watch' ]);
   });
 
+  grunt.registerTask('server-prod', function (target) {
+    grunt.task.run([ 'eslint', 'mochaTest', 'uglify', 'concat', 'cssmin',  'git']);
+  });
+
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
@@ -87,8 +102,11 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('gpush', function(n){
+    grunt.task.run(['gitpush']);
+  });
+
   grunt.registerTask('deploy', [
-    // add your deploy tasks here
   ]);
 
 
