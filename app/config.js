@@ -28,7 +28,9 @@ db.once('open', function() {
 
   var fluffy = new Kitten({ name: 'morty' });
 
-  fluffy.save();
+  fluffy.save(function (err, fluffy) {
+    if (err) return console.error(err);
+  });
   
   Kitten.find(function (err, kittens) {
   if (err) return console.error(err);
