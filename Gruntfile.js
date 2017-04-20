@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       separator: '\n//CONCATTED FILES HERE!!!!!\n'
     },
     dist: {
-      src: ['./public/client/*.js', './public/lib/*.js'],
+      src: ['./public/client/*.js'],
       dest: './public/dist/index.js'
     }
   },
@@ -17,7 +17,12 @@ module.exports = function(grunt) {
   uglify:{
     options:{mangle:false},
     my_target:{
-      files:{ './public/dist/index.js' : ['./public/dist/index.js']}
+      files:{ './public/dist/index.js' : './public/dist/index.js',
+      './public/lib/backbone.min.js' : './public/lib/backbone.js',
+      './public/lib/jquery.min.js' : './public/lib/jquery.js',
+      './public/lib/underscore.min.js' : './public/lib/underscore.js',
+      './public/lib/handlebars.min.js' : './public/lib/handlebars.js'
+      }
     }
   },       
 
