@@ -3,8 +3,24 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    concat: {
+
+  concat: {
+    options: {
+      separator: '\n//CONCATTED FILES HERE!!!!!\n'
     },
+    dist: {
+      src: ['./public/client/*.js', './public/lib/*.js'],
+      dest: './public/dist/index.js'
+    }
+  },
+
+  uglify:{
+    options:{mangle:false},
+    my_target:{
+      files:{ './public/dist/index.js' : ['./public/dist/index.js']}
+    }
+  },       
+
 
     mochaTest: {
       test: {
@@ -31,8 +47,7 @@ module.exports = function(grunt) {
        }
     },
 
-    uglify: {
-    },
+
 
     eslint: {
       target: [
@@ -41,6 +56,15 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      options: {
+        mergeIntoShorthands: false,
+        roundingPrecision: -1
+      },
+      target: {
+        files: {
+          './public/dist/style.min.css': ['./public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -81,7 +105,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('server-prod', function (target) {
-    grunt.task.run([ 'eslint', 'mochaTest', 'uglify', 'concat', 'cssmin',  'git']);
+    grunt.task.run([ 'test', 'build',  'gpush']);
   });
 
   ////////////////////////////////////////////////////
@@ -89,11 +113,9 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest', 'eslint'
   ]);
 
-  grunt.registerTask('build', [
-  ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
@@ -105,6 +127,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('gpush', function(n){
     grunt.task.run(['gitpush']);
+  });
+
+  grunt.registerTask('build', function(n){
+    grunt.task.run(['concat', 'uglify', 'cssmin']);
   });
 
   grunt.registerTask('deploy', [
