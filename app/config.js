@@ -26,12 +26,11 @@ db.once('open', function() {
 
   // var Kitten = mongoose.model('Kitten', kittySchema);
 
-  // var fluffy = new Kitten({ name: 'fluffy' });
+  var fluffy = new Kitten({ name: 'morty' });
 
-  // fluffy.save(function (err, fluffy) {
-  //   if (err) return console.error(err);
-  //   console.log(fluffy, 'IT"S SO FLUFFY');
-    Kitten.find(function (err, kittens) {
+  fluffy.save();
+  
+  Kitten.find(function (err, kittens) {
   if (err) return console.error(err);
   console.log(kittens);
   });
