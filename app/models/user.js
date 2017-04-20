@@ -9,6 +9,21 @@ var userSchema = mongoose.Schema( {
   timestamp: {type: Date, default: Date.now }
 })
 
+userSchema.pre('save', function(next){
+  var cipher = Promise.promisify(bcrypt.hash);
+  return cipher(this.password, null, null).bind(this)
+  .then(function(hash) {
+    this.password = hash;
+    next();
+  });
+});
+
+userSchema.methods.comparePassword = function(attemptedPassword, callback) {
+  bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
+    callback(isMatch);
+  });
+}
+
 module.exports = mongoose.model('User', userSchema);
 
 
