@@ -15,22 +15,26 @@ var db = mongoose.connection;
 db.once('open', function() {
   console.log('I AM CONNECTED TO THE MONGODB');
 
-  var kittySchema = mongoose.Schema({
-    name: String
-  });
+  // var kittySchema = mongoose.Schema({
+  //   name: String
+  // });
 
-  var Kitten = mongoose.model('Kitten', kittySchema);
+  // var Kitten = mongoose.model('Kitten', kittySchema);
 
-  var silence = new Kitten({ name: 'Silence' });
-  console.log('WHAT IS THE SOUND OF SILENCE!!??!?!?', silence.name); // 'Silence'
+  // var silence = new Kitten({ name: 'Silence' });
+  // console.log('WHAT IS THE SOUND OF SILENCE!!??!?!?', silence.name); // 'Silence'
 
-  var Kitten = mongoose.model('Kitten', kittySchema);
+  // var Kitten = mongoose.model('Kitten', kittySchema);
 
-  var fluffy = new Kitten({ name: 'fluffy' });
+  // var fluffy = new Kitten({ name: 'fluffy' });
 
-  fluffy.save(function (err, fluffy) {
-    if (err) return console.error(err);
-    console.log(fluffy, 'IT"S SO FLUFFY');
+  // fluffy.save(function (err, fluffy) {
+  //   if (err) return console.error(err);
+  //   console.log(fluffy, 'IT"S SO FLUFFY');
+    Kitten.find(function (err, kittens) {
+  if (err) return console.error(err);
+  console.log(kittens);
+})
   });
 
 });
