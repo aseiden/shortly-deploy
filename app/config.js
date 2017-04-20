@@ -15,11 +15,11 @@ var db = mongoose.connection;
 db.once('open', function() {
   console.log('I AM CONNECTED TO THE MONGODB');
 
-  // var kittySchema = mongoose.Schema({
-  //   name: String
-  // });
+  var kittySchema = mongoose.Schema({
+    name: String
+  });
 
-  // var Kitten = mongoose.model('Kitten', kittySchema);
+  var Kitten = mongoose.model('Kitten', kittySchema);
 
   // var silence = new Kitten({ name: 'Silence' });
   // console.log('WHAT IS THE SOUND OF SILENCE!!??!?!?', silence.name); // 'Silence'
@@ -34,7 +34,6 @@ db.once('open', function() {
     Kitten.find(function (err, kittens) {
   if (err) return console.error(err);
   console.log(kittens);
-})
   });
 
 });
